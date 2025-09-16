@@ -3,11 +3,14 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator as createLeftDrawer } from '@react-navigation/drawer';
 
 import PhotoGalleryScreen from './src/screens/PhotoGalleryScreen';
 import PhotoDetailScreen from './src/screens/PhotoDetailScreen';
 import PhotoModalScreen from './src/screens/PhotoModalScreen';
-import WeatherHomeScreen from './src/screens/WeatherHomeScreen';
+
+import CurrentWeatherScreen from './src/screens/CurrentWeatherScreen';
+import ForecastTabs from './src/screens/ForecastTabs';
 
 export type StackParamList = {
   PhotoGallery: undefined;
@@ -33,28 +36,28 @@ function GalleryNavigator() {
         <GalleryStack.Screen
           name="PhotoModal"
           component={PhotoModalScreen}
-          options={{
-            title: 'Photo',
-            headerStyle: { backgroundColor: 'black' },
-            headerTintColor: 'white',
-            headerShadowVisible: false,
-          }}
+          options={{ title: 'Photo', headerStyle: { backgroundColor: 'black' }, headerTintColor: 'white', headerShadowVisible: false }}
         />
       </GalleryStack.Group>
     </GalleryStack.Navigator>
   );
 }
 
-const WeatherStack = createStackNavigator();
+const WeatherLeftDrawer = createLeftDrawer();
 function WeatherNavigator() {
   return (
-    <WeatherStack.Navigator>
-      <WeatherStack.Screen
-        name="WeatherHome"
-        component={WeatherHomeScreen}
-        options={{ title: 'Weather app' }}
+    <WeatherLeftDrawer.Navigator screenOptions={{ drawerPosition: 'left', headerTitle: '' }}>
+      <WeatherLeftDrawer.Screen
+        name="CurrentWeather"
+        component={CurrentWeatherScreen}
+        options={{ title: 'Current Weather' }}
       />
-    </WeatherStack.Navigator>
+      <WeatherLeftDrawer.Screen
+        name="Forecast"
+        component={ForecastTabs}
+        options={{ title: 'Forecast' }}
+      />
+    </WeatherLeftDrawer.Navigator>
   );
 }
 
